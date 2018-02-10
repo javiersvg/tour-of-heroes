@@ -1,11 +1,12 @@
 package com.javiersvg.tourofheroes;
 
-/**
- * Created by Javier on 1/10/2018.
- */
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Hero {
     private String id;
     private String name;
+    @JsonIgnore
+    private String owner;
 
     public String getId() {
         return id;
@@ -21,5 +22,13 @@ public class Hero {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getOwner() {
+        return owner;
     }
 }

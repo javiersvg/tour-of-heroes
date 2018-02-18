@@ -10,14 +10,10 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
-import org.springframework.data.domain.AuditorAware;
-import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
@@ -25,11 +21,17 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 
 import javax.servlet.Filter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @SpringBootApplication
 @EnableOAuth2Client
@@ -83,6 +85,7 @@ public class TourOfHeroesApplication extends WebSecurityConfigurerAdapter {
         tokenServices.setPrincipalExtractor(AppUser::new);
         googleFilter.setTokenServices(tokenServices);
         googleFilter.setApplicationEventPublisher(applicationEventPublisher);
+        googleFilter.setAuthenticationSuccessHandler(getAuthenticationSuccessHandler());
         return googleFilter;
     }
 
@@ -104,5 +107,20 @@ public class TourOfHeroesApplication extends WebSecurityConfigurerAdapter {
     public void saveUser(InteractiveAuthenticationSuccessEvent event) {
         AppUser principal = (AppUser) event.getAuthentication().getPrincipal();
         appUserRepository.save(principal);
+    }
+
+    @Bean
+    public SavedRequestAwareAuthenticationSuccessHandler getAuthenticationSuccessHandler() {
+        SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+        successHandler.setRedirectStrategy(new RedirectStrategy() {
+            private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+            @Override
+            public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url) throws IOException {
+                if("redirect".equals(request.getHeader("ux_mode"))) {
+                    redirectStrategy.sendRedirect(request, response, url);
+                }
+            }
+        });
+        return successHandler;
     }
 }

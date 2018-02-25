@@ -1,5 +1,6 @@
 package com.javiersvg.tourofheroes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,11 +11,13 @@ public class AppUser implements UserDetails {
     private String id;
     private String name;
     private String email;
+    private final String picture;
 
     AppUser(Map<String, Object> stringObjectMap) {
         this.id = String.valueOf(stringObjectMap.get("id"));
         this.name = String.valueOf(stringObjectMap.get("name"));
         this.email = String.valueOf(stringObjectMap.get("email"));
+        this.picture = String.valueOf(stringObjectMap.get("picture"));
     }
 
     @Override
@@ -22,6 +25,7 @@ public class AppUser implements UserDetails {
         return null;
     }
 
+    @JsonIgnore
     @Override
     public String getPassword() {
         return null;
@@ -58,5 +62,9 @@ public class AppUser implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPicture() {
+        return picture;
     }
 }

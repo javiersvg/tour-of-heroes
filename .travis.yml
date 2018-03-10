@@ -9,3 +9,11 @@ addons:
     github_token:
       secure: ${GITHUB_TOKEN}
 script: "./gradlew build sonarqube"
+deploy:
+  provider: releases
+  api_key:
+    secure: ${GITHUB_TOKEN}
+  file: "build/libs/*.jar"
+  skip_cleanup: true
+  on:
+    tags: true

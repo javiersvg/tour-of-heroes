@@ -1,4 +1,9 @@
 language: java
 jdk:
-  - oraclejdk8
-script: ./gradlew build
+- oraclejdk8
+addons:
+  sonarcloud:
+    organization: javiersvg-github
+    token:
+      secure: DcQwqKl0hY19l87Vu822YWdGJNKmVZ+Dj0AZCFTfsCi1J66JILH7M+J9X8c5zzqnKWuv2pWwao7VJWEvXWPxF95gf6YsBE0Y5S3od+xzcXeyTWysd8h5jaEteJzJwifZECBcWfMm6vP60sEoFyBJdfL81LAvUR+0QO7QW1oorajQEd+ueVLKltclyF+GezX+aQaaYCW9d0G2P2IclqM/JiUrdo5b4RJ1lsVxU6M5aS1i3zxhJBDXitZo1pPpQb8suv+1h7hpgvINsGwOvlxhQEZOYheuhT2y/wi9j4FvCa6Sfv+DnqfFamu+SKp2EWlt58L3/bGrWOJKgvrSza8sbjgavclPhQt8u1Z9ZxDRTq3NwPJND9FVN5QT368AD7kYqnzgrSK+9YXL3DI2cwbEMSDV4kUgioZX3X6Thnn/T6FLjCbFwPYCZQ8izYUjsuuGtBAfQkDyhTQp+sAiTLtGzVsy3+pJyzXYeKz0UNz3AlvuACNeyNMIIDq1KJ9OSA7hq0OAHW1WST+LTrOYUoKQDwhN3KTpKp2hVupGYRKJqBh5PVfm6+jdWMQIgOXQOn9X2xpDhUlOPPmwspBzUzlTojSoHkMSv+D6lqVCBfFlBSCaTRyCVBe+S8SHlzzXjCMuT+rqoR2+kPbXfajETlu4BieqldH7UeERFReTgDuxVWg=
+script: "./gradlew build sonarqube"

@@ -12,3 +12,7 @@ Spring boot application meant to log in users that generate a token with to
  
  ## Build   
  Run `./gradlew bootRun` to build the project. The build artifacts will be stored in the `build/` directory.
+ 
+ ## Run with docker
+ In an environments with a container with mongo running run:
+ `docker run -d -e "SPRING_DATA_MONGODB_HOST=mongo" --link="mongo" -p 8080:8080 --name=tour-of-heroes javiersvg/tour-of-heroes`

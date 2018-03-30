@@ -1,0 +1,18 @@
+version: '3.6'
+services:
+  angular-tour-of-heroes:
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongo
+    container_name: angular-tour-of-heroes
+    image: javiersvg/angular-tour-of-heroes
+    ports: ['127.0.0.1:80:80']
+    links:
+      - tour-of-heroes
+  tour-of-heroes:
+    container_name: tour-of-heroes
+    image: javiersvg/tour-of-heroes
+    links:
+      - mongo
+  mongo:
+    image: mongo
+    container_name: mongo

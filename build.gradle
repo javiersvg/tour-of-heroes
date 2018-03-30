@@ -44,6 +44,7 @@ dependencies {
 	compile('org.springframework.data:spring-data-rest-hal-browser')
 	compile('org.springframework.data:spring-data-mongodb')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.security:spring-security-test')
 }
 
 dependencyManagement {

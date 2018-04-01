@@ -5,14 +5,16 @@ services:
       - SPRING_DATA_MONGODB_HOST=mongo
     container_name: angular-tour-of-heroes
     image: javiersvg/angular-tour-of-heroes
-    ports: ['127.0.0.1:80:80']
+    ports: ['127.0.0.1:4200:80']
     links:
       - tour-of-heroes
   tour-of-heroes:
     container_name: tour-of-heroes
     image: javiersvg/tour-of-heroes
+    ports: ['127.0.0.1:8082:8080']
     links:
       - mongo
   mongo:
     image: mongo
     container_name: mongo
+    ports: ['127.0.0.1:27017:27017']

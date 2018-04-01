@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 public interface HeroRepository extends MongoRepository<Hero, String> {
 
     @PreAuthorize("hasRole('ROLE_USER')")
+    @PostFilter("filterObject.owner == principal.id")
     List<Hero> findByNameLike(@Param("name") String name);
 
     @PreAuthorize("hasRole('ROLE_USER')")

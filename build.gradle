@@ -46,6 +46,7 @@ dependencies {
 	compile('org.springframework.data:spring-data-mongodb')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
+    testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 }
 
 dependencyManagement {

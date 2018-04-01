@@ -15,8 +15,6 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -28,7 +26,6 @@ import java.util.Set;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,9 +39,6 @@ public class UserControllerTest {
     @MockBean
     private AppUserRepository appUserRepository;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
     @Test
     public void getUserShouldReturnForbiddenToUnregisteredUsers() throws Exception {
         this.mvc.perform(get("/user")).andExpect(status().isForbidden());
@@ -52,11 +46,6 @@ public class UserControllerTest {
 
     @Test
     public void getUserShouldAcceptLoggedUsers() throws Exception {
-        this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(springSecurity())
-                .build();
-
-
         this.mvc.perform(get("/user")
                 .with(authentication(getOauthTestAuthentication()))
                 .sessionAttr("scopedTarget.oauth2ClientContext", getOauth2ClientContext()))
@@ -67,7 +56,7 @@ public class UserControllerTest {
         return new OAuth2Authentication(getOauth2Request(), getAuthentication());
     }
 
-    private OAuth2Request getOauth2Request () {
+    private OAuth2Request getOauth2Request() {
         String clientId = "oauth-client-id";
         Map<String, String> requestParameters = Collections.emptyMap();
         String redirectUrl = "http://my-redirect-url.com";

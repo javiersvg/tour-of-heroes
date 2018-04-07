@@ -1,4 +1,5 @@
 FROM store/oracle/serverjre:8
-
-ADD https://github.com/javiersvg/tour-of-heroes/releases/download/0.0.1/tour-of-heroes-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+VOLUME /tmp
+ARG JAR_FILE
+ADD ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

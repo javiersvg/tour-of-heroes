@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build --build-arg JAR_FILE=https://github.com/javiersvg/tour-of-heroes/releases/download/$CACHE_TAG/tour-of-heroes-$CACHE_TAG.jar -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+docker build --build-arg CACHE_TAG=$CACHE_TAG -f $DOCKERFILE_PATH -t $IMAGE_NAME .

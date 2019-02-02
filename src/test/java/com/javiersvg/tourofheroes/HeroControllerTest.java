@@ -5,13 +5,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimNames;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.Instant;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,16 +29,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class HeroControllerTest {
 
+    private static final String TOKEN = "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJzdWJqZWN0IiwiZXhwIjo0NjgzODA1MTI4fQ.ULEPdHG-" +
+            "MK5GlrTQMhgqcyug2brTIZaJIrahUeq9zaiwUSdW83fJ7W1IDd2Z3n4a25JY2uhEcoV95lMfccHR6y_2DLrNvfta22SumY9PEDF2pido" +
+            "54LXG6edIGgarnUbJdR4rpRe_5oRGVa8gDx8FnuZsNv6StSZHAzw5OsuevSTJ1UbJm4UfX3wiahFOQ2OI6G-r5TB2rQNdiPHuNyzG5yz" +
+            "nUqRIZ7-GCoMqHMaC-1epKxiX8gYXRROuUYTtcMNa86wh7OVDmvwVmFioRcR58UWBRoO1XQexTtOQq_t8KYsrPZhb9gkyW8x2bAQF-d0" +
+            "J0EJY8JslaH6n4RBaZISww";
     @Autowired
     private MockMvc mvc;
 
     @Test
-    public void getUserShouldReturnForbiddenToUnregisteredUsers() throws Exception {
+    public void getHeroesShouldReturnForbiddenToUnregisteredUsers() throws Exception {
         this.mvc.perform(get("/heroes")).andExpect(status().isUnauthorized());
     }
 
     @Test
-    public void getUserShouldAcceptLoggedUsers() throws Exception {
+    public void getHeroesShouldAuthorizeToken() throws Exception {
+        this.mvc.perform(get("/heroes")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + TOKEN))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void getHeroesShouldAcceptLoggedUsers() throws Exception {
         this.mvc.perform(get("/heroes")
                 .with(authentication(getAuthentication())))
                 .andExpect(status().isOk());
@@ -43,16 +60,12 @@ public class HeroControllerTest {
         List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ROLE_USER");
 
         HashMap<String, Object> details = new HashMap<>();
-        details.put("id", "1");
+        details.put(JwtClaimNames.JTI, "1");
         details.put("name", "Javier Mino");
         details.put("email", "javiermino@test.com");
 
-        AppUser principal = new AppUser(details);
+        Jwt principal = new Jwt(TOKEN, Instant.now(), Instant.now().plusSeconds(10), Collections.singletonMap("alg", "RS256"), details);
 
-        TestingAuthenticationToken token = new TestingAuthenticationToken(principal, null, authorities);
-        token.setAuthenticated(true);
-        token.setDetails(details);
-
-        return token;
+        return new JwtAuthenticationToken(principal, authorities);
     }
 }

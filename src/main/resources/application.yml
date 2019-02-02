@@ -1,14 +1,14 @@
 logging:
   path: log/
   level.org.springframework.security.oauth2: DEBUG
-google:
-    client:
-      clientId: 204566820246-67tser74gtv78uiaskm945enn5b5agl2.apps.googleusercontent.com
-      clientSecret: t0hCLNRZqpQUrQyrEgA_TixL
-      accessTokenUri: https://www.googleapis.com/oauth2/v4/token
-      userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
-      clientAuthenticationScheme: form
-      scope: profile email
-    resource:
-      userInfoUri: https://www.googleapis.com/oauth2/v2/userinfo
-      preferTokenInfo: false
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 204566820246-67tser74gtv78uiaskm945enn5b5agl2.apps.googleusercontent.com
+            client-secret: t0hCLNRZqpQUrQyrEgA_TixL
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com

@@ -1,5 +1,6 @@
 package com.javiersvg.tourofheroes;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,11 @@ public class UserControllerTest {
     @Autowired
     private AppUserRepository appUserRepository;
 
+    @Before
+    public void setUp() throws Exception {
+        appUserRepository.deleteAll();
+    }
+
     @Test
     public void getUserShouldReturnForbiddenToUnregisteredUsers() throws Exception {
         this.mvc.perform(get("/user")).andExpect(status().isUnauthorized());
@@ -60,7 +66,7 @@ public class UserControllerTest {
         this.mvc.perform(get("/user")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + TOKEN))
                 .andExpect(status().isOk());
-        assertThat(appUserRepository.findAll().size(), is(3));
+        assertThat(appUserRepository.findAll().size(), is(1));
     }
 
     @Test

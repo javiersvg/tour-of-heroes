@@ -1,0 +1,7 @@
+---
+request:
+    url: /user
+    method: GET
+
+response:
+    status: 401

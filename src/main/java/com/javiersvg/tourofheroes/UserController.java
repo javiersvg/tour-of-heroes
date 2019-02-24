@@ -12,6 +12,7 @@ public class UserController {
 
     @Autowired
     private AppUserRepository repository;
+
     @RequestMapping("/user")
     public Jwt getUser(Authentication authentication) {
         return repository.findOne(Example.of((Jwt) authentication.getPrincipal())).orElseThrow();

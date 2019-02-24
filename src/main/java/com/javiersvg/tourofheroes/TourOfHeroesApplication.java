@@ -33,6 +33,7 @@ public class TourOfHeroesApplication extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .mvcMatchers("/browser/**").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2ResourceServer()

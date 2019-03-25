@@ -60,7 +60,7 @@ public class TourOfHeroesApplication extends WebSecurityConfigurerAdapter {
     public void saveUser(AuthenticationSuccessEvent event) {
 	    try {
             Jwt principal = (Jwt) event.getAuthentication().getPrincipal();
-            appUserRepository.save(principal);
+            appUserRepository.save(new User(principal));
         } catch (Exception e) {
 
         }

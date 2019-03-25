@@ -17,6 +17,7 @@ buildscript {
 plugins {
 	id "org.sonarqube" version "2.6"
 	id 'com.gradle.build-scan' version '2.1'
+	id "org.asciidoctor.convert" version "1.5.3"
 }
 
 buildScan {
@@ -58,8 +59,11 @@ dependencies {
 	compile('org.springframework.data:spring-data-mongodb')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
+	
     testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 	testCompile('com.squareup.okhttp3:mockwebserver:3.12.1')
+
+	asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
 	testCompile 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 	testCompile 'org.springframework.restdocs:spring-restdocs-mockmvc'
@@ -67,4 +71,25 @@ dependencies {
 
 contracts {
 	packageWithBaseClasses = 'com.javiersvg.tourofheroes'
+}
+
+ext {
+	snippetsDir = file('build/generated-snippets')
+}
+
+test {
+	outputs.dir snippetsDir
+}
+
+asciidoctor {
+	dependsOn test
+	inputs.dir snippetsDir
+	attributes 'snippets': snippetsDir
+}
+
+bootJar {
+	dependsOn asciidoctor
+	from ("${asciidoctor.outputDir}/html5") {
+		into 'static/docs'
+	}
 }

@@ -1,0 +1,7 @@
+---
+request:
+  url: /hero
+  method: GET
+
+response:
+  status: 401

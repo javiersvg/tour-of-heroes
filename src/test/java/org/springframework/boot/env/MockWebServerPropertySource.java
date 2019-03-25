@@ -68,8 +68,7 @@ public class MockWebServerPropertySource extends PropertySource<MockWebServer> i
         if (logger.isTraceEnabled()) {
             logger.trace("Looking up the url for '" + name + "'");
         }
-        String url = getUrl();
-        return url;
+        return getUrl();
     }
 
     @Override

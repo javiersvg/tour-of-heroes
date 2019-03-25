@@ -4,11 +4,6 @@ logging:
 spring:
   security:
     oauth2:
-      client:
-        registration:
-          google:
-            client-id: 204566820246-67tser74gtv78uiaskm945enn5b5agl2.apps.googleusercontent.com
-            client-secret: t0hCLNRZqpQUrQyrEgA_TixL
       resourceserver:
         jwt:
-          issuer-uri: https://accounts.google.com
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs

@@ -1,0 +1,9 @@
+== Heroes
+
+[[hero-get]]
+=== Get a hero
+
+Get the Hero you want.
+
+==== Response structure
+

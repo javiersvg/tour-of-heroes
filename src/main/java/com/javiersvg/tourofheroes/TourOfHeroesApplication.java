@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.hateoas.UriTemplate;
+import org.springframework.hateoas.hal.CurieProvider;
+import org.springframework.hateoas.hal.DefaultCurieProvider;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -33,7 +36,7 @@ public class TourOfHeroesApplication extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .mvcMatchers("/browser/**").anonymous()
+                .mvcMatchers("/browser/**", "/favicon.ico").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2ResourceServer()
@@ -64,5 +67,10 @@ public class TourOfHeroesApplication extends WebSecurityConfigurerAdapter {
         } catch (Exception e) {
 
         }
+    }
+
+    @Bean
+    public CurieProvider curieProvider() {
+        return new DefaultCurieProvider("ex", new UriTemplate("/docs/{rel}.html"));
     }
 }

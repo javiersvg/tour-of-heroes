@@ -1,5 +1,6 @@
 FROM openjdk:11
 
+COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
 COPY src src

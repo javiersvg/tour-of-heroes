@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.hateoas.UriTemplate;
 import org.springframework.hateoas.hal.CurieProvider;
@@ -24,7 +26,7 @@ import java.util.Collection;
 
 @SpringBootApplication
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-public class TourOfHeroesApplication extends WebSecurityConfigurerAdapter {
+public class TourOfHeroesApplication {
 
     @Autowired
     private AppUserRepository appUserRepository;
@@ -33,19 +35,37 @@ public class TourOfHeroesApplication extends WebSecurityConfigurerAdapter {
 		SpringApplication.run(TourOfHeroesApplication.class, args);
 	}
 
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .mvcMatchers("/browser/**", "/favicon.ico").anonymous()
-                .anyRequest().authenticated()
-                .and()
-                .oauth2ResourceServer()
-                .jwt()
-                .jwtAuthenticationConverter(grantedAuthoritiesExtractor());
+	@Configuration
+    @Order(1)
+	public class HalBrowserWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests()
+                    .mvcMatchers("/browser/**")
+                    .authenticated()
+                    .and()
+                    .oauth2Login();
+        }
     }
 
-    private Converter<Jwt, AbstractAuthenticationToken> grantedAuthoritiesExtractor() {
-        return new GrantedAuthoritiesExtractor();
+    @Configuration
+    public class ApiWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests()
+                    .mvcMatchers("/favicon.ico").anonymous()
+                    .anyRequest().authenticated()
+                    .and()
+                    .oauth2ResourceServer()
+                    .jwt()
+                    .jwtAuthenticationConverter(grantedAuthoritiesExtractor());
+        }
+
+        private Converter<Jwt, AbstractAuthenticationToken> grantedAuthoritiesExtractor() {
+            return new GrantedAuthoritiesExtractor();
+        }
     }
 
     static class GrantedAuthoritiesExtractor extends JwtAuthenticationConverter {

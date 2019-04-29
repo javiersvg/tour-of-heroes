@@ -13,6 +13,6 @@ public class HeroEventHandler {
     @HandleBeforeCreate
     public void handeHeroSave(Hero hero) {
         Jwt appUser = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        hero.setOwner(appUser.getId());
+        hero.setOwner(appUser.getClaimAsString("email"));
     }
 }

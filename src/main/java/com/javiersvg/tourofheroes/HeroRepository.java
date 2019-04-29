@@ -17,16 +17,16 @@ import java.util.Optional;
 public interface HeroRepository extends MongoRepository<Hero, String> {
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PostFilter("filterObject.owner == principal.id")
+    @PostFilter("filterObject.owner == principal.email")
     List<Hero> findByNameLike(@Param("name") String name);
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PostAuthorize("returnObject.get()?.owner == principal.id")
+    @PostAuthorize("returnObject.get()?.owner == principal.email")
     @Override
     <S extends Hero> Optional<S> findOne(Example<S> example);
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @Query("{'owner': ?#{ principal?.id }}")
+    @Query("{'owner': ?#{ principal?.email }}")
     @Override
     Page<Hero> findAll(Pageable pageable);
 

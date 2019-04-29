@@ -1,6 +1,6 @@
 ---
 request:
-  url: /hero
+  url: /heroes
   method: GET
 
 response:

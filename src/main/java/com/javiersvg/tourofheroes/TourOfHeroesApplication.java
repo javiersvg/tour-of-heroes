@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.hateoas.UriTemplate;
@@ -36,26 +37,13 @@ public class TourOfHeroesApplication {
 	}
 
 	@Configuration
-    @Order(1)
-	public class HalBrowserWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+	public class HeroApiWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
+                    .antMatcher("/heroes/**")
                     .authorizeRequests()
-                    .mvcMatchers("/browser/**")
-                    .authenticated()
-                    .and()
-                    .oauth2Login();
-        }
-    }
-
-    @Configuration
-    public class ApiWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .authorizeRequests()
-                    .mvcMatchers("/favicon.ico").anonymous()
                     .anyRequest().authenticated()
                     .and()
                     .oauth2ResourceServer()
@@ -65,6 +53,40 @@ public class TourOfHeroesApplication {
 
         private Converter<Jwt, AbstractAuthenticationToken> grantedAuthoritiesExtractor() {
             return new GrantedAuthoritiesExtractor();
+        }
+    }
+
+    @Configuration
+    @Order(Ordered.HIGHEST_PRECEDENCE + 1)
+    public class UserApiWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .antMatcher("/user/**")
+                    .authorizeRequests()
+                    .anyRequest().authenticated()
+                    .and()
+                    .oauth2ResourceServer()
+                    .jwt()
+                    .jwtAuthenticationConverter(grantedAuthoritiesExtractor());
+        }
+
+        private Converter<Jwt, AbstractAuthenticationToken> grantedAuthoritiesExtractor() {
+            return new GrantedAuthoritiesExtractor();
+        }
+    }
+
+    @Configuration
+    public class HalBrowserWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests()
+                    .mvcMatchers("/favicon.ico").anonymous()
+                    .anyRequest().authenticated()
+                    .and()
+                    .oauth2Login();
         }
     }
 

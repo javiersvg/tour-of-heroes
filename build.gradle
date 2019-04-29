@@ -94,3 +94,9 @@ bootJar {
 		into 'static/docs'
 	}
 }
+
+processResources {
+	from ("${asciidoctor.outputDir}/html5") {
+		into 'static/docs'
+	}
+}

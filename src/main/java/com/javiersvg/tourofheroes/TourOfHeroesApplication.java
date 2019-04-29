@@ -22,6 +22,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 import java.util.Collection;
 
@@ -86,7 +87,10 @@ public class TourOfHeroesApplication {
                     .mvcMatchers("/favicon.ico").anonymous()
                     .anyRequest().authenticated()
                     .and()
-                    .oauth2Login();
+                    .oauth2Login()
+                    .and()
+                    .headers()
+                    .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
         }
     }
 

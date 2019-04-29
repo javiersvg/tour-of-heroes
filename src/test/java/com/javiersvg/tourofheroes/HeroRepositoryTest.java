@@ -29,9 +29,9 @@ public class HeroRepositoryTest {
     @Test
     @WithMockCustomUser
     public void findByNameLikeShouldReturnElementWhenAvailable() {
-        this.heroRepository.save(buildHero("Javier", "1"));
-        this.heroRepository.save(buildHero("Marilyn", "1"));
-        this.heroRepository.save(buildHero("Seba", "2"));
+        this.heroRepository.save(buildHero("Javier", "user@mail"));
+        this.heroRepository.save(buildHero("Marilyn", "user@mail"));
+        this.heroRepository.save(buildHero("Seba", "2@mail"));
 
         List<Hero> heroes = this.heroRepository.findByNameLike("Mar");
         assertThat(heroes.size(), is(1));
@@ -39,21 +39,21 @@ public class HeroRepositoryTest {
     }
 
     @Test
-    @WithMockCustomUser(id = 3)
+    @WithMockCustomUser(email = "3@mail")
     public void findOneShouldReturnElementWhenAvailable() {
-        this.heroRepository.save(buildHero("Javier", "3"));
-        Hero savedHero = this.heroRepository.save(buildHero("Marilyn", "3"));
-        this.heroRepository.save(buildHero("Seba", "2"));
+        this.heroRepository.save(buildHero("Javier", "3@mail"));
+        Hero savedHero = this.heroRepository.save(buildHero("Marilyn", "3@mail"));
+        this.heroRepository.save(buildHero("Seba", "2@mail"));
         Optional<Hero> foundHero = this.heroRepository.findOne(of(savedHero));
         assertThat(foundHero.orElseThrow().getName(), is("Marilyn"));
     }
 
     @Test
-    @WithMockCustomUser(id = 4)
+    @WithMockCustomUser(email = "4@mail")
     public void findAllShouldReturnAllOwnedElements() {
-        this.heroRepository.save(buildHero("Javier", "4"));
-        this.heroRepository.save(buildHero("Marilyn", "4"));
-        this.heroRepository.save(buildHero("Seba", "2"));
+        this.heroRepository.save(buildHero("Javier", "4@mail"));
+        this.heroRepository.save(buildHero("Marilyn", "4@mail"));
+        this.heroRepository.save(buildHero("Seba", "2@mail"));
 
         Page<Hero> heroes = this.heroRepository.findAll(of(0,10));
         assertThat(heroes.getTotalElements(), is(2L));
@@ -62,21 +62,21 @@ public class HeroRepositoryTest {
     }
 
     @Test
-    @WithMockCustomUser(id = 5)
+    @WithMockCustomUser(email = "5@mail")
     public void saveShouldStoreRetrievableElement() {
-        this.heroRepository.save(buildHero("Javier", "5"));
-        Hero savedHero = this.heroRepository.save(buildHero("Marilyn", "5"));
-        this.heroRepository.save(buildHero("Seba", "2"));
+        this.heroRepository.save(buildHero("Javier", "5@mail"));
+        Hero savedHero = this.heroRepository.save(buildHero("Marilyn", "5@mail"));
+        this.heroRepository.save(buildHero("Seba", "2@mail"));
         Optional<Hero> foundHero = this.heroRepository.findOne(of(savedHero));
         assertThat(foundHero.orElseThrow().getName(), is("Marilyn"));
     }
 
     @Test
-    @WithMockCustomUser(id = 6)
+    @WithMockCustomUser(email = "6@mail")
     public void deleteShouldStopSavedElementFromBeingReturned() {
-        this.heroRepository.save(buildHero("Javier", "6"));
-        Hero savedHero = this.heroRepository.save(buildHero("Marilyn", "6"));
-        this.heroRepository.save(buildHero("Seba", "2"));
+        this.heroRepository.save(buildHero("Javier", "6@mail"));
+        Hero savedHero = this.heroRepository.save(buildHero("Marilyn", "6@mail"));
+        this.heroRepository.save(buildHero("Seba", "2@mail"));
         Optional<Hero> foundHero = this.heroRepository.findOne(of(savedHero));
         assertThat(foundHero.orElseThrow().getName(), is("Marilyn"));
 

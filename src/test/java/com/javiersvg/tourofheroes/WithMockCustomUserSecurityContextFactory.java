@@ -30,7 +30,7 @@ public class WithMockCustomUserSecurityContextFactory
 
         Map<String, Object> details = new HashMap<>();
         details.put("name", customUser.name());
-        details.put(JwtClaimNames.JTI, customUser.id());
+        details.put("email", customUser.email());
 
         Jwt principal = new Jwt(TOKEN, Instant.now(), Instant.now().plusSeconds(10), Collections.singletonMap("alg", "RS256"), details);
         Authentication auth =

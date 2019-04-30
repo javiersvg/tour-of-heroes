@@ -7,3 +7,6 @@ Get the Hero you want.
 
 ==== Response structure
 
+include::{snippets}/HeroTest_validate_shouldNotReturnHero/curl-request.adoc[]
+include::{snippets}/HeroTest_validate_shouldNotReturnHero/http-request.adoc[]
+include::{snippets}/HeroTest_validate_shouldNotReturnHero/http-response.adoc[]

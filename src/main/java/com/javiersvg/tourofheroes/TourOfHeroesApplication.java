@@ -20,6 +20,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
+import org.springframework.security.oauth2.core.ClaimAccessor;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
@@ -108,8 +109,8 @@ public class TourOfHeroesApplication {
     @EventListener(AuthenticationSuccessEvent.class)
     public void saveUser(AuthenticationSuccessEvent event) {
 	    try {
-            Jwt principal = (Jwt) event.getAuthentication().getPrincipal();
-            appUserRepository.save(new User(principal));
+            ClaimAccessor appUser = (ClaimAccessor) event.getAuthentication().getPrincipal();
+            appUserRepository.save(new User(appUser));
         } catch (Exception e) {
 
         }

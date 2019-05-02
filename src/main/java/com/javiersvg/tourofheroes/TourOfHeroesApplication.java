@@ -45,6 +45,7 @@ public class TourOfHeroesApplication {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .antMatcher("/heroes/**")
+                    .csrf().disable()
                     .authorizeRequests()
                     .anyRequest().authenticated()
                     .and()

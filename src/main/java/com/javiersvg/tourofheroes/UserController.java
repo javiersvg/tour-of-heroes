@@ -5,6 +5,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,7 +14,7 @@ public class UserController {
     @Autowired
     private AppUserRepository repository;
 
-    @RequestMapping("/user")
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public User getUser(Authentication authentication) {
         return repository.findOne(Example.of(new User((Jwt) authentication.getPrincipal()))).orElseThrow();
     }

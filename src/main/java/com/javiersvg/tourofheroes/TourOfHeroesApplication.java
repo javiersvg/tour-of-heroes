@@ -97,6 +97,8 @@ public class TourOfHeroesApplication {
     }
 
     static class GrantedAuthoritiesExtractor extends JwtAuthenticationConverter {
+
+	    @Override
         protected Collection<GrantedAuthority> extractAuthorities(Jwt jwt) {
             return AuthorityUtils.createAuthorityList("ROLE_USER");
         }
@@ -109,12 +111,8 @@ public class TourOfHeroesApplication {
 
     @EventListener(AuthenticationSuccessEvent.class)
     public void saveUser(AuthenticationSuccessEvent event) {
-	    try {
-            ClaimAccessor appUser = (ClaimAccessor) event.getAuthentication().getPrincipal();
-            appUserRepository.save(new User(appUser));
-        } catch (Exception e) {
-
-        }
+        ClaimAccessor appUser = (ClaimAccessor) event.getAuthentication().getPrincipal();
+        appUserRepository.save(new User(appUser));
     }
 
     @Bean

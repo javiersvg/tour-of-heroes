@@ -86,7 +86,7 @@ public class TourOfHeroesApplication {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
-                    .mvcMatchers("/favicon.ico").anonymous()
+                    .mvcMatchers("/favicon.ico").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .oauth2Login()

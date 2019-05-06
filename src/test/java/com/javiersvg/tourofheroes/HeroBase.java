@@ -7,10 +7,16 @@ import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.stream.Collectors;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -37,5 +43,25 @@ public abstract class HeroBase {
                 .alwaysDo(document(
                         getClass().getSimpleName() + "_" + testName.getMethodName()))
                 .build());
+    }
+
+    protected String getToken() {
+        return "Bearer " + token("Default");
+    }
+
+    private String token(String name) {
+        try {
+            return resource(name + ".token");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String resource(String suffix) throws IOException {
+        String name = UserControllerTest.class.getSimpleName() + "-" + suffix;
+        ClassPathResource resource = new ClassPathResource(name, UserControllerTest.class);
+        try ( BufferedReader reader = new BufferedReader(new FileReader(resource.getFile())) ) {
+            return reader.lines().collect(Collectors.joining());
+        }
     }
 }

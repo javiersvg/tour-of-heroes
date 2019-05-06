@@ -1,0 +1,12 @@
+---
+request:
+  url: /heroes
+  method: GET
+  headers:
+    Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpob24gRG9lIiwiZW1haWwiOiJqYW5lZG9lQG1haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiaXNzIjoiYWNjb3VudHMuZ29vZ2xlLmNvbSJ9.mrZU8GYBTk2-x7yNiD5hg8_QHLvnvWSQ4-jF6W-WZ2fYx1N5CuCB-0FpvHpfjJ_nK5euiRaEyDxJ85CQB4kxL0rrmf9l8PtoUgBJ7vnBDjsGGI9Jh69l6vM3y9nEu3mc4TD8VT27BZTKCuzNJpfGKRFgbP1SliUIZkLLffSzLoWnrcz_5yiZgLSocG0rNl5m2Cot-0RuaWNzLgOI-mOi-7OkdSUexhBLUB1fY6UgNMJWwUVVOVlFCnwFj65Mt1lRD1kGa6586fpmfrkHl5NOXCEZgTDFYsMxwQTzmEu_af1aOQ095T6e6pmbMvpKTogZe8x3dG9ob4Vclpb1QksK6g
+
+response:
+  status: 200
+  body:
+    _embedded:
+      "ex:heroes": []

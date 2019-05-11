@@ -26,6 +26,11 @@ public interface HeroRepository extends MongoRepository<Hero, String> {
     <S extends Hero> Optional<S> findOne(Example<S> example);
 
     @PreAuthorize("hasRole('ROLE_USER')")
+    @PostAuthorize("returnObject.get()?.owner == principal.claims['email']")
+    @Override
+    Optional<Hero> findById(String s);
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @Query("{'owner': ?#{ principal?.claims['email'] }}")
     @Override
     Page<Hero> findAll(Pageable pageable);

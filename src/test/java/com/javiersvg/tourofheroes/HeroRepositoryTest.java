@@ -49,6 +49,16 @@ public class HeroRepositoryTest {
     }
 
     @Test
+    @WithMockCustomUser(email = "3@mail")
+    public void shouldReturnHeroById() {
+        this.heroRepository.save(buildHero("Javier", "3@mail"));
+        Hero savedHero = this.heroRepository.save(buildHero("Marilyn", "3@mail"));
+        this.heroRepository.save(buildHero("Seba", "2@mail"));
+        Optional<Hero> foundHero = this.heroRepository.findById(savedHero.getId());
+        assertThat(foundHero.orElseThrow().getName(), is("Marilyn"));
+    }
+
+    @Test
     @WithMockCustomUser(email = "4@mail")
     public void findAllShouldReturnAllOwnedElements() {
         this.heroRepository.save(buildHero("Javier", "4@mail"));

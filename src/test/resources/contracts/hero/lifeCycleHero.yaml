@@ -11,8 +11,7 @@ request:
     headers:
       -
         key: Authorization
-        command: getToken()
-
+        command: getDefaultUserToken()
 
 response:
   status: 201
@@ -20,7 +19,7 @@ response:
     JSESSIONID: 1
 
 ---
-name: 2 validate
+name: 2 get
 request:
   url: /heroes
   method: GET
@@ -30,7 +29,7 @@ request:
     headers:
       -
         key: Authorization
-        command: getToken()
+        command: getDefaultUserToken()
 response:
   status: 200
   body:
@@ -38,3 +37,20 @@ response:
       "ex:heroes":
         -
           name: Antman
+
+---
+name: 3 delete
+request:
+  url: /heroes
+  method: DELETE
+  headers:
+    Authorization: secret
+  matchers:
+    url:
+      command: getHref()
+    headers:
+      - key: Authorization
+        command: getDefaultUserToken()
+
+response:
+  status: 204

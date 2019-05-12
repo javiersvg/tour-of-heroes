@@ -1,0 +1,61 @@
+---
+name: 1 save
+request:
+  url: /heroes
+  method: POST
+  headers:
+    Authorization: secret
+  body:
+    name: Antman
+  matchers:
+    headers:
+      -
+        key: Authorization
+        command: getDefaultUserToken()
+
+response:
+  status: 201
+  cookies:
+    JSESSIONID: 1
+
+---
+name: 2 get
+request:
+  url: /heroes
+  method: GET
+  headers:
+    Authorization: secret
+  matchers:
+    headers:
+      -
+        key: Authorization
+        command: getDefaultUserToken()
+response:
+  status: 200
+  body:
+    _embedded:
+      "ex:heroes":
+        -
+          name: Antman
+
+---
+name: 3 search
+request:
+  url: /heroes/search/findByNameLike
+  method: GET
+  headers:
+    Authorization: secret
+  queryParameters:
+    name: Antman
+  matchers:
+    headers:
+      -
+        key: Authorization
+        command: getDefaultUserToken()
+response:
+  status: 200
+  body:
+    _embedded:
+      "ex:heroes":
+        -
+          name: Antman

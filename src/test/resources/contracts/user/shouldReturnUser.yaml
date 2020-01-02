@@ -3,7 +3,7 @@ request:
     url: /user
     method: GET
     headers:
-        Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiaXNzIjoiYWNjb3VudHMuZ29vZ2xlLmNvbSJ9.CRVdZ-G3bGOsmXftBHAVpgRwViywZtp0PBWWZap3TAgLxdaMAN-XE5b1JMQZZxYpIQIhLZwZFlq3LOBLfJe8UTqZinM9XnvDDhaRiSsPPo2lYnpeO0fJf2GLutyWxPjQMyW4jpuP1Q8Mi6gNazut3cEEiPKf14eJ9t12byXm6kTjK8I2L-sppjBMZshNrvk4cv1MFwmzW9J2N593JygMyetnyohZGAiMMMd5OEv7Y8gV1lqTlm33nFe_dKkkMebEYGQBfN482bU7VSpx2nrwXqTjPFL3Aa9gTtZ_SFO5AfXLFgnyiiARu906OGKMecDx-_zDb5K9fy12kf2nG4Wasg
+        Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJhQG1haWwuY29tIiwicGljdHVyZSI6Imh0dHBzOi8vaW1ncGxhY2Vob2xkZXIuY29tLzQweDQwIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiaXNzIjoiYWNjb3VudHMuZ29vZ2xlLmNvbSJ9.dfSA9HHI_kTk_gSeKkqgXsHY-Siay24L7J5QNEYz8yDkk536A8vyTnypaZx6kB-Px211IyZ0wnfMULZ6l4B2HX4sJpWO6DoFTsVWENrhgNc5E3KvVPr7WuS7Ciky7mM_ApQ8jsHn-ekaKAp-v4jLlesfp5hEgSammlz7bet1U6DdodoWnsBSTel45CuVmxNDtwNviWqogkra5xVWrwE2pluW8ZpFi0OkgBlpkpsbi0xw2a9mXJP7rFDqw_Jq1_55A5uUMd5J183f4pO78G5LlKiFOSyNknktMTuaf15JWlkGdftNOmCOimnp-BmqWeeTVOIAcUDvSvEpuhUKalBFmg
     matchers:
         headers:
           - key: Authorization
@@ -11,3 +11,7 @@ request:
 
 response:
     status: 200
+    body:
+      name: "John Doe"
+      id: "a@mail.com"
+      imageUrl: "https://imgplaceholder.com/40x40"

@@ -16,7 +16,6 @@ buildscript {
 
 plugins {
 	id 'org.sonarqube' version "2.6"
-	id 'com.gradle.build-scan' version '2.1'
 	id 'org.asciidoctor.convert' version "1.5.3"
 	id 'maven-publish'
 }
@@ -110,14 +109,6 @@ publishing {
 			credentials {
 				username = findProperty("github.username")
 				password = findProperty("github.token")
-			}
-		}
-	}
-	publications {
-		register("jar", MavenPublication) {
-			from(components["java"])
-			pom {
-				url.set("https://github.com/javiersvg/tour-of-heroes.git")
 			}
 		}
 	}

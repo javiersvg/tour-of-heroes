@@ -35,8 +35,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -81,8 +80,9 @@ public class HeroIntegrationTest {
         this.mvc.perform(
                 post("/heroes")
                         .content(asJsonString(buildHero("Javier", "jhondoe@mail")))
-                        .with(authentication(getAuthentication())))
-                .andExpect(status().isCreated());
+                        .with(authentication(getAuthentication())).header("Accept", "application/hal+json"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value("Javier"));
     }
 
     @Test

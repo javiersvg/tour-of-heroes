@@ -7,11 +7,11 @@ import org.springframework.security.oauth2.core.ClaimAccessor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RepositoryEventHandler(Hero.class)
+@RepositoryEventHandler
 public class HeroEventHandler {
 
     @HandleBeforeCreate
-    public void handeHeroSave(Hero hero) {
+    public void handleHeroSave(Hero hero) {
         ClaimAccessor appUser = (ClaimAccessor) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         hero.setOwner(appUser.getClaimAsString("email"));
     }

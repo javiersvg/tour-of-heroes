@@ -120,7 +120,7 @@ publishing {
 
                 from components.java
 		versionMapping {
-		    usage('java-api') { fromResolutionOf('platformApiClasspath') }
+		    usage('java-api') { fromResolutionResult() }
 		 }
             }
 	}

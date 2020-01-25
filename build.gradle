@@ -120,4 +120,5 @@ publishing {
 
                 from components.java
             }
+	}
 }

@@ -112,4 +112,12 @@ publishing {
 			}
 		}
 	}
+	publications {
+            maven(MavenPublication) {
+                groupId = 'com.javiersvg'
+                artifactId = 'tour-of-heroes'
+                version = '0.0.1-SNAPSHOT'
+
+                from components.java
+            }
 }

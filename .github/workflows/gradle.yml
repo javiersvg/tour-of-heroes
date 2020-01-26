@@ -18,4 +18,4 @@ jobs:
       - name: Build with Gradle
         env:
           ORG_GRADLE_PROJECT_token: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew build publish
+        run: ./gradlew build publish --stacktrace

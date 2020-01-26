@@ -108,7 +108,7 @@ publishing {
 			url = uri("https://maven.pkg.github.com/javiersvg/tour-of-heroes")
 			credentials {
 				username = findProperty("github.username") 
-				password = findProperty("github.token")
+				password = findProperty("token")
 			}
 		}
 	}

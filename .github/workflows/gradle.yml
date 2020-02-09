@@ -18,4 +18,4 @@ jobs:
       - name: Build with Gradle
         env:
           ORG_GRADLE_PROJECT_token: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew clean build publish -x verifierStubsJar
+        run: ./gradlew clean build publish -x publishStubsPublicationToGithubRepository

@@ -9,14 +9,3 @@ addons:
     github_token:
       secure: ${GITHUB_TOKEN}
 script: "./gradlew build jacocoTestReport sonarqube"
-before_deploy:
-      - git config --local user.name "Travis CI"
-      - git config --local user.email "automatic@travis-ci.org"
-      - git tag -f "$(./gradlew properties -q | grep version | awk '{print $2}')"
-deploy:
-  provider: releases
-  api_key:
-    secure: ${GITHUB_TOKEN}
-  file_glob: true
-  file: build/libs/*.jar
-  skip_cleanup: true

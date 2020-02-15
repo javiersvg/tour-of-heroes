@@ -7,10 +7,10 @@ COPY build.gradle .
 COPY settings.gradle .
 COPY src src
 
-RUN ./gradlew build -x verifierStubsJar
+RUN ./gradlew build
 
 FROM openjdk:11-jre
 VOLUME /tmp
-ARG JAR_FILE=/workspace/app/build/libs/tour-of-heroes-*.jar
+ARG JAR_FILE=/workspace/app/build/libs/tour-of-heroes-*-stubs.jar
 COPY --from=build ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

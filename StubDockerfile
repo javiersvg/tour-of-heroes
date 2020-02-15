@@ -7,10 +7,12 @@ COPY build.gradle .
 COPY settings.gradle .
 COPY src src
 
-RUN ./gradlew build
+RUN ./gradlew clean build publishToMavenLocal
 
-FROM openjdk:11-jre
+FROM springcloud/spring-cloud-contract-stub-runner:2.2.0.BUILD-SNAPSHOT
 VOLUME /tmp
-ARG JAR_FILE=/workspace/app/build/libs/tour-of-heroes-*-stubs.jar
-COPY --from=build ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
+ENV STUBRUNNER_STUBS_MODE=LOCAL
+ENV STUBRUNNER_IDS=com.javiermino:tour-of-heroes:+:8080
+
+COPY --from=build /root/.m2/ /root/.m2/

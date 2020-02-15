@@ -33,7 +33,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'groovy'
 apply plugin: 'spring-cloud-contract'
 
-group = 'com.javiersvg'
+group = 'com.javiermino'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.11
 
@@ -107,21 +107,9 @@ publishing {
 			name = "Github"
 			url = uri("https://maven.pkg.github.com/javiersvg/tour-of-heroes")
 			credentials {
-				username = findProperty("github.username") 
+				username = findProperty("github.username")
 				password = findProperty("token")
 			}
 		}
-	}
-	publications {
-            maven(MavenPublication) {
-                groupId = 'com.javiersvg'
-                artifactId = 'tour-of-heroes'
-                version = '0.0.1-SNAPSHOT'
-
-                from components.java
-		versionMapping {
-		    usage('java-api') { fromResolutionResult() }
-		 }
-            }
 	}
 }

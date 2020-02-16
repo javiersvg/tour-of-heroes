@@ -6,8 +6,6 @@ addons:
     organization: javiersvg-github
     token:
       secure: ${SONAR_TOKEN}
-    github_token:
-      secure: ${GITHUB_TOKEN}
 script: "BUILD_NUMBER=${TRAVIS_BUILD_NUMBER} ./gradlew build jacocoTestReport sonarqube"
 before_deploy:
       - git config --local user.name "Travis CI"

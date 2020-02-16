@@ -1,0 +1,17 @@
+---
+request:
+    url: /user
+    method: GET
+    headers:
+        Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJhQG1haWwuY29tIiwicGljdHVyZSI6Imh0dHBzOi8vdmlhLnBsYWNlaG9sZGVyLmNvbS80MCIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjIsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20ifQ.Oj3MTid28s77UqcSrd7GZUrED-99doXrBQrCIbqjSUzczGPqyzQiTSZ54y06BmiF9X8kWFQ5vS0B5PIroWxcAM5Ixr1uUth8JQKDKYU1LE_NfqAksWNN9BR3SWSDRrdtKYO3APMxPt-ctrNO_tZZpUHq6Iii8pivtuuALXkZIQizMGNa_vAqtXb0AbVXa9-hMK58Mg8bDGPWSshTmRyJ_5HPnKlqCrDOVxjCCL46_IxYkD5DbeUZnfWlZc_t5ogQJx-HmEYhOO5_6FYR7xkKeyL1hgU7fvSIQrqI4zyacBvWdmTAOpBNSxcKkKY4lrrmRN_SNyQIrl2SnNIAZ9MFzA
+    matchers:
+        headers:
+          - key: Authorization
+            predefined: non_empty
+
+response:
+    status: 200
+    body:
+      name: "John Doe"
+      id: "a@mail.com"
+      imageUrl: "https://via.placeholder.com/40"

@@ -1,0 +1,19 @@
+logging.level.org.springframework: DEBUG
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${mockwebserver.url}/.well-known/jwks.json
+      client:
+        registration:
+          test:
+            client-id: client-id
+            client-secret: client-secret
+            authorization-grant-type: authorization_code
+            redirect-uri: ${baseUrl}/login/oauth2/code/${registrationId}
+        provider:
+          test:
+            authorization-uri: ${mockwebserver.uri}/oauth2/v1/authorize
+            token-uri: ${mockwebserver.uri}/oauth2/v1/token
+            jwk-set-uri: ${mockwebserver.url}/.well-known/jwks.json

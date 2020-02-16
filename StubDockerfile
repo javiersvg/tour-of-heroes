@@ -1,0 +1,18 @@
+FROM openjdk:11 as build
+WORKDIR /workspace/app
+
+COPY gradle gradle
+COPY gradlew .
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+
+RUN ./gradlew clean build publishToMavenLocal
+
+FROM springcloud/spring-cloud-contract-stub-runner:2.2.0.BUILD-SNAPSHOT
+VOLUME /tmp
+
+ENV STUBRUNNER_STUBS_MODE=LOCAL
+ENV STUBRUNNER_IDS=com.javiermino:tour-of-heroes:+:8080
+
+COPY --from=build /root/.m2/ /root/.m2/

@@ -1,23 +1,9 @@
 language: java
 jdk:
-- oraclejdk8
+- oraclejdk11
 addons:
   sonarcloud:
     organization: javiersvg-github
     token:
       secure: ${SONAR_TOKEN}
-    github_token:
-      secure: ${GITHUB_TOKEN}
-script: "BUILD_NUMBER=${TRAVIS_BUILD_NUMBER} ./gradlew build jacocoTestReport sonarqube"
-before_deploy:
-      - git config --local user.name "Travis CI"
-      - git config --local user.email "automatic@travis-ci.org"
-      - git tag "$(BUILD_NUMBER=${TRAVIS_BUILD_NUMBER} ./gradlew properties -q | grep version | awk '{print $2}')"
-deploy:
-  provider: releases
-  api_key:
-    secure: ${GITHUB_TOKEN}
-  file_glob: true
-  file: build/libs/*.jar
-  skip_cleanup: true
-  overwrite: true
+script: "./gradlew build jacocoTestReport sonarqube"

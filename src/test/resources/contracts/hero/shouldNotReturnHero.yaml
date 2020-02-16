@@ -1,0 +1,8 @@
+---
+priority: 100
+request:
+  url: /heroes
+  method: GET
+
+response:
+  status: 401

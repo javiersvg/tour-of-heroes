@@ -3,6 +3,7 @@
 out/
 !gradle/wrapper/gradle-wrapper.jar
 *.log
+log/
 
 ### STS ###
 .apt_generated

@@ -1,3 +1,4 @@
+![Java CI](https://github.com/javiersvg/tour-of-heroes/workflows/Java%20CI/badge.svg)
 [![Build Status](https://travis-ci.org/javiersvg/tour-of-heroes.svg?branch=master)](https://travis-ci.org/javiersvg/tour-of-heroes)
 [![Build Status](https://sonarcloud.io/api/project_badges/measure?project=com.javiersvg%3Atour-of-heroes&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.javiersvg%3Atour-of-heroes)
 
